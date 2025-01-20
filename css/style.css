@@ -106,3 +106,7 @@ footer.page-footer {
 .no-padding {
   padding: 0 !important; /* Removes any padding */
 }
+
+.top-space {
+  padding-top: 60px !important;
+}

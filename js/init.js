@@ -159,3 +159,82 @@ function initializeCountrySelector() {
 
 // Call the function to initialize the countries dropdown
 initializeCountrySelector();
+
+function initializeGoalsSelector() {
+  const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/goals.csv';
+  fetch(csvURL)
+    .then(response => response.text()) // Get the text content of the CSV
+    .then(csvContent => {
+      Papa.parse(csvContent, {
+        header: true, // Parse CSV assuming it has headers
+        skipEmptyLines: true, // Ignore empty lines
+        complete: function(results) {
+          const data = results.data; // Parsed CSV data as an array of objects
+          const goals = data.map(row => row['Goals']); // Extract goals from "Goals" column
+          
+          // Populate the dropdown
+          const goalsSelect = document.getElementById('goals');
+
+          // Add "Clear All" and "Select All" options
+          const clearOption = document.createElement('option');
+          clearOption.value = 'clear-all';
+          clearOption.textContent = 'Clear All';
+          goalsSelect.appendChild(clearOption);
+
+          const selectAllOption = document.createElement('option');
+          selectAllOption.value = 'select-all';
+          selectAllOption.textContent = 'Select All';
+          goalsSelect.appendChild(selectAllOption);
+
+          // Add goals as options
+          goals.forEach(goal => {
+            if (goal) { // Ensure goal is not null or undefined
+              const option = document.createElement('option');
+              option.value = goal.replace(/ /g, "_").toLowerCase(); // Make it URL-friendly
+              option.textContent = goal;
+              goalsSelect.appendChild(option);
+            }
+          });
+
+          // Reinitialize Materialize form select
+          M.FormSelect.init(goalsSelect);
+
+          // Add event listener for dropdown changes
+          goalsSelect.addEventListener('change', () => {
+            const selectedOptions = Array.from(goalsSelect.selectedOptions);
+            const selectedValues = selectedOptions.map(option => option.value);
+
+            // Handle "Select All"
+            if (selectedValues.includes('select-all')) {
+              goalsSelect.selectedIndex = -1; // Deselect "Select All"
+              goalsSelect.querySelectorAll('option:not([value="clear-all"], [value="select-all"])').forEach(option => {
+                option.selected = true;
+              });
+              M.FormSelect.init(goalsSelect); // Reinitialize to reflect the changes
+            }
+
+            // Handle "Clear All"
+            if (selectedValues.includes('clear-all')) {
+              goalsSelect.selectedIndex = -1; // Deselect everything
+              M.FormSelect.init(goalsSelect); // Reinitialize to reflect the changes
+            }
+
+            // Automatically deselect "Clear All" if any other option is selected
+            if (selectedValues.some(value => value !== 'clear-all')) {
+              const clearAllOption = goalsSelect.querySelector('option[value="clear-all"]');
+              if (clearAllOption) {
+                clearAllOption.selected = false;
+                M.FormSelect.init(goalsSelect);
+              }
+            }
+          });
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error loading Goals CSV:', error);
+    });
+}
+
+// Call the function to initialize the goals dropdown
+initializeGoalsSelector();
