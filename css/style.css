@@ -1,0 +1,108 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+.parallax-overlay {
+  position: relative;
+  z-index: -2 !important;
+}
+
+.parallax-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #042330;
+  opacity: 0.75;
+  pointer-events: none; /* Ensure it doesn't block interactions */
+  z-index: 1; /* Ensure it sits on top of the image */
+}
+
+.parallax-start-at-400 {
+  min-height: 400px; /* Start the parallax effect from height 400px */
+  
+}
+
+.parallax-start-at-1200 {
+  min-height: 1200px; /* Start the parallax effect from height 400px */
+  z-index: -2;
+}
+.text-with-bg {
+  position: relative;
+  display: inline; /* Ensures the background is just behind the text */
+  padding: 2px; /* Add space between text and background */
+  border-radius: 12px; /* Round the background */
+}
+.text-with-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.95); /* White background with 50% opacity */
+  z-index: -1; /* Ensures the background is behind the text */
+  width: 100%;
+  height: 100%;
+  border-radius: 12px; /* Round the background edges */
+}
+
+.no-padding {
+  padding: 0 !important; /* Removes any padding */
+}
