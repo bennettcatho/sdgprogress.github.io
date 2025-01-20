@@ -84,6 +84,12 @@ function loadCSVData() {
     });
 }
 
+// Load CSV data when the page is loaded
+window.onload = function() {
+  loadCSVData();
+};
+
+
 function initializeCountrySelector() {
   const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/countries.csv'; // Replace with your raw Gist URL
 
@@ -95,7 +101,8 @@ function initializeCountrySelector() {
         skipEmptyLines: true, // Ignore empty lines
         complete: function(results) {
           const data = results.data; // Parsed CSV data as an array of objects
-          const countries = data.map(row => row.country); // Extract all countries from the "country" column
+          const countries = data.map(row => row['Country']); // Extract all countries from the "country" column
+          console.log(countries)
 
           // Populate the dropdown
           const countriesSelect = document.getElementById('countries');
