@@ -183,7 +183,7 @@
             <div class="switch">
               <label>
                 Group all selected goals
-                <input type="checkbox">
+                <input type="checkbox" class="no-bg-change" id="group-goals-switch">
                 <span class="lever"></span>
                 Don't group goals
               </label>
@@ -193,7 +193,7 @@
             <div class="switch">
               <label>
                 Group all selected countries
-                <input type="checkbox">
+                <input type="checkbox" class="no-bg-change" checked id="group-countries-switch">
                 <span class="lever"></span>
                 Don't group countries
               </label>
@@ -204,31 +204,19 @@
           <table class="highlight responsive-table">
             <thead>
               <tr>
-                  <th>Name</th>
-                  <th>Item Name</th>
-                  <th>Item Price</th>
+                <th>Country</th>
+                <th>Year Group 1</th>
+                <th>Year Group 2</th>
               </tr>
             </thead>
-    
             <tbody>
-              <tr>
-                <td>Alvin</td>
-                <td>Eclair</td>
-                <td>$0.87</td>
-              </tr>
-              <tr>
-                <td>Alan</td>
-                <td>Jellybean</td>
-                <td>$3.76</td>
-              </tr>
-              <tr>
-                <td>Jonathan</td>
-                <td>Lollipop</td>
-                <td>$7.00</td>
-              </tr>
+              <!-- Rows will be dynamically added here -->
             </tbody>
           </table>
-        </div>
+        </div>   
+        <div class="col s12 center top-space">
+          <button id="export-csv-btn" class="btn waves-effect waves-light color1">Export as CSV</button>
+        </div>     
       </div>
 
     </div>

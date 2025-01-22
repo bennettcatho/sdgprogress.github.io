@@ -110,3 +110,32 @@ footer.page-footer {
 .top-space {
   padding-top: 60px !important;
 }
+
+/* Override for checkboxes with the 'no-bg-change' class */
+.switch label input[type=checkbox].no-bg-change:checked + .lever {
+  background-color: rgba(0, 0, 0, 0.38)
+}
+
+/* Prevent background change for the lever's after pseudo-element */
+.switch label input[type=checkbox].no-bg-change:checked + .lever:after {
+  background-color: #F1F1F1;
+  -webkit-box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+input[type=checkbox].no-bg-change:checked:not(:disabled) ~ .lever:active::before,
+input[type=checkbox].no-bg-change:checked:not(:disabled).tabbed:focus ~ .lever::before {
+    background-color: rgba(0, 0, 0, 0.08); /* Reset to default */
+}
+
+.color1 {
+  background-color: #075A7D !important;
+}
+
+.color1-text {
+  color: #075A7D !important;
+}
+
+.change-to-color-1:focus {
+  border-bottom: 1px solid #075A7D !important;
+}

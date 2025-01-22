@@ -102,7 +102,6 @@ function initializeCountrySelector() {
         complete: function(results) {
           const data = results.data; // Parsed CSV data as an array of objects
           const countries = data.map(row => row['Country']); // Extract all countries from the "country" column
-          console.log(countries)
 
           // Populate the dropdown
           const countriesSelect = document.getElementById('countries');
@@ -161,7 +160,8 @@ function initializeCountrySelector() {
 initializeCountrySelector();
 
 function initializeGoalsSelector() {
-  const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/goals.csv';
+  const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/goals.csv'; // URL to the CSV file
+  
   fetch(csvURL)
     .then(response => response.text()) // Get the text content of the CSV
     .then(csvContent => {
@@ -171,7 +171,7 @@ function initializeGoalsSelector() {
         complete: function(results) {
           const data = results.data; // Parsed CSV data as an array of objects
           const goals = data.map(row => row['Goals']); // Extract goals from "Goals" column
-          
+
           // Populate the dropdown
           const goalsSelect = document.getElementById('goals');
 
@@ -199,33 +199,24 @@ function initializeGoalsSelector() {
           // Reinitialize Materialize form select
           M.FormSelect.init(goalsSelect);
 
-          // Add event listener for dropdown changes
+          // Add event listener for change to handle "Select All" and "Clear All" logic
           goalsSelect.addEventListener('change', () => {
             const selectedOptions = Array.from(goalsSelect.selectedOptions);
             const selectedValues = selectedOptions.map(option => option.value);
 
-            // Handle "Select All"
+            // If "Select All" is selected, select all goals (excluding "Clear All")
             if (selectedValues.includes('select-all')) {
               goalsSelect.selectedIndex = -1; // Deselect "Select All"
               goalsSelect.querySelectorAll('option:not([value="clear-all"], [value="select-all"])').forEach(option => {
                 option.selected = true;
               });
-              M.FormSelect.init(goalsSelect); // Reinitialize to reflect the changes
+              M.FormSelect.init(goalsSelect); // Reinitialize to update the select element
             }
 
-            // Handle "Clear All"
+            // If "Clear All" is selected, deselect everything
             if (selectedValues.includes('clear-all')) {
               goalsSelect.selectedIndex = -1; // Deselect everything
-              M.FormSelect.init(goalsSelect); // Reinitialize to reflect the changes
-            }
-
-            // Automatically deselect "Clear All" if any other option is selected
-            if (selectedValues.some(value => value !== 'clear-all')) {
-              const clearAllOption = goalsSelect.querySelector('option[value="clear-all"]');
-              if (clearAllOption) {
-                clearAllOption.selected = false;
-                M.FormSelect.init(goalsSelect);
-              }
+              M.FormSelect.init(goalsSelect); // Reinitialize to update the select element
             }
           });
         }
@@ -236,5 +227,198 @@ function initializeGoalsSelector() {
     });
 }
 
-// Call the function to initialize the goals dropdown
 initializeGoalsSelector();
+function updateTableWithYearGroups() {
+  const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/data.csv';
+
+  fetch(csvURL)
+    .then(response => response.text())
+    .then(csvContent => {
+      Papa.parse(csvContent, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          const data = results.data;
+
+          // Process data to compute the value for Year Groups
+          const yearGroupValues = {};
+          data.forEach(row => {
+            const country = row.Country;
+            if (!yearGroupValues[country]) {
+              yearGroupValues[country] = {
+                totalGoalsSum: 0, // Sum of all goals
+                totalGoalsCount: 0
+              };
+            }
+
+            // Count the year for each row
+            yearGroupValues[country].yearCount += 1;
+
+            // Sum up all goals for this row
+            Object.keys(row).forEach(key => {
+              if (key.startsWith('goal') && row[key]) {
+                const value = parseFloat(row[key]);
+                if (!isNaN(value)) {
+                  yearGroupValues[country].totalGoalsSum += value;
+                  yearGroupValues[country].totalGoalsCount += 1;
+                }
+              }
+            });
+          });
+
+          // Calculate the Year Group value for each country
+          Object.keys(yearGroupValues).forEach(country => {
+            const countryData = yearGroupValues[country];
+            countryData.yearGroupValue =
+              countryData.totalGoalsSum /
+              (countryData.totalGoalsCount);
+          });
+
+          // Update the table
+          const tableBody = document.querySelector('table tbody');
+          tableBody.innerHTML = ''; // Clear existing rows
+
+          Object.keys(yearGroupValues).forEach(country => {
+            const row = document.createElement('tr');
+
+            // Add country name
+            const countryCell = document.createElement('td');
+            countryCell.textContent = country;
+            row.appendChild(countryCell);
+
+            // Add Year Group 1 and Year Group 2 (same value)
+            const yearGroup1Cell = document.createElement('td');
+            const yearGroup2Cell = document.createElement('td');
+            const yearGroupValue = yearGroupValues[country].yearGroupValue.toFixed(2); // Round to 2 decimal places
+            yearGroup1Cell.textContent = yearGroupValue;
+            yearGroup2Cell.textContent = yearGroupValue;
+            row.appendChild(yearGroup1Cell);
+            row.appendChild(yearGroup2Cell);
+
+            tableBody.appendChild(row);
+          });
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error loading data:', error);
+    });
+}
+
+// Call the function to update the table
+updateTableWithYearGroups();
+
+function exportTableToCSV() {
+  const table = document.querySelector('table');
+  const rows = table.querySelectorAll('tr');
+  let csvContent = '';
+
+  // Loop through rows and extract data
+  rows.forEach(row => {
+    const cells = row.querySelectorAll('th, td');
+    const rowContent = Array.from(cells)
+      .map(cell => `"${cell.textContent}"`) // Escape content with quotes
+      .join(',');
+    csvContent += rowContent + '\n';
+  });
+
+  // Create a blob and download link
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', 'table_export.csv');
+  link.style.display = 'none';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// Add event listener to the button
+document.getElementById('export-csv-btn').addEventListener('click', exportTableToCSV);
+
+function filterTableByCountries() {
+  const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/data.csv';
+
+  fetch(csvURL)
+    .then(response => response.text())
+    .then(csvContent => {
+      Papa.parse(csvContent, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          const data = results.data;
+
+          // Get selected countries from the dropdown
+          const countriesSelect = document.getElementById('countries');
+          const selectedCountries = Array.from(countriesSelect.selectedOptions).map(option => option.value);
+
+          // Filter data by selected countries
+          const filteredData = data.filter(row => selectedCountries.includes(row.Country));
+
+          // Process data to compute the value for Year Groups
+          const yearGroupValues = {};
+          filteredData.forEach(row => {
+            const country = row.Country;
+            if (!yearGroupValues[country]) {
+              yearGroupValues[country] = {
+                totalGoalsSum: 0, // Sum of all goals
+                totalGoalsCount: 0
+              };
+            }
+
+            // Sum up all goals for this row
+            Object.keys(row).forEach(key => {
+              if (key.startsWith('goal') && row[key]) {
+                const value = parseFloat(row[key]);
+                if (!isNaN(value)) {
+                  yearGroupValues[country].totalGoalsSum += value;
+                  yearGroupValues[country].totalGoalsCount += 1;
+                }
+              }
+            });
+          });
+
+          // Calculate the Year Group value for each country
+          Object.keys(yearGroupValues).forEach(country => {
+            const countryData = yearGroupValues[country];
+            countryData.yearGroupValue =
+              countryData.totalGoalsSum /
+              (countryData.totalGoalsCount);
+          });
+
+          // Update the table
+          const tableBody = document.querySelector('table tbody');
+          tableBody.innerHTML = ''; // Clear existing rows
+
+          Object.keys(yearGroupValues).forEach(country => {
+            const row = document.createElement('tr');
+
+            // Add country name
+            const countryCell = document.createElement('td');
+            countryCell.textContent = country;
+            row.appendChild(countryCell);
+
+            // Add Year Group 1 and Year Group 2 (same value)
+            const yearGroup1Cell = document.createElement('td');
+            const yearGroup2Cell = document.createElement('td');
+            const yearGroupValue = yearGroupValues[country].yearGroupValue.toFixed(2); // Round to 2 decimal places
+            yearGroup1Cell.textContent = yearGroupValue;
+            yearGroup2Cell.textContent = yearGroupValue;
+            row.appendChild(yearGroup1Cell);
+            row.appendChild(yearGroup2Cell);
+
+            tableBody.appendChild(row);
+          });
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error loading data:', error);
+    });
+}
+
+// Add event listener to the countries dropdown
+const countriesSelect = document.getElementById('countries');
+countriesSelect.addEventListener('change', filterTableByCountries);
