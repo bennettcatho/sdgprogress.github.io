@@ -139,3 +139,12 @@ input[type=checkbox].no-bg-change:checked:not(:disabled).tabbed:focus ~ .lever::
 .change-to-color-1:focus {
   border-bottom: 1px solid #075A7D !important;
 }
+
+.btn-container {
+  width: 50% !important;
+  margin: 0 24.5% 0 24.5% !important;
+}
+
+.justify-text {
+  text-align: justify;
+}
