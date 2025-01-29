@@ -354,7 +354,7 @@ const goalsSelect = document.getElementById('goals');
 
 function filterYears(data, yeargroup1 = [], yeargroup2 = []) {
   yeargroup1 = data.filter(row => yeargroup1.includes(row.year));
-  yeargroup2 = data.filter(row => yeargroup2.includes(row.year));
+  yeargroup2 = data.filter(row => yeargroup2.includes(row.year)); //|| [];
   return {yeargroup1, yeargroup2};
 }
 
@@ -363,8 +363,9 @@ function filterCountries(data, countries = []) {
   return countries;
 }
 
-function filteredTable(goals = [], data = [], secondData = []) {
-  //goals = data.filter(row => goals.includes(row.goal));
+
+function filteredTable(goals = [], firstData = [], secondData = []) {
+  let selected_goals = [];
   let goalColumnNames = [];
   if (goals.length === 0) {
     goals = ['goal_1_-_no_poverty', 'goal_2_-_zero_hunger', 'goal_3_-_good_health_and_well_being', 'goal_4_-_quality_education', 'goal_5_-_gender_equality', 'goal_6_-_clean_water_and_sanitation', 'goal_7_-_affordable_clean_energy', 'goal_8_-_efficient_work_and_economic_growth', 'goal_9_-_industry,_innovation_and_infrastructure', 'goal_10_-_reduced_inequalities', 'goal_11_-_sustainable_cities_and_communities', 'goal_12_-_responsible_consumption_and_production', 'goal_13_-_climate_action', 'goal_14_-_life_below_water', 'goal_15_-_life_on_land', 'goal_16_-_peace,_justice_and_strong_institutions', 'goal_17_-_partnerships_for_the_goals'];
@@ -373,49 +374,85 @@ function filteredTable(goals = [], data = [], secondData = []) {
     const goalNumber = goal.match(/goal_(\d+)_/)[1];
     return `goal${goalNumber}`;
   });
-  const yearGroupValues = {};
-  // first year group (fix later)
-  data.forEach(row => {
+  const yearGroupValues1 = {};
+  firstData.forEach(row => {
     const country = row.Country;
-    if (!yearGroupValues[country]) {
-      yearGroupValues[country] = {
-        totalGoalsSum: 0, // Sum of all selected goals
-        totalGoalsCount: 0
+    if (!yearGroupValues1[country]) {
+      yearGroupValues1[country] = {
+        totalSum: 0,
+        totalCount: 0
       };
     }
     goalColumnNames.forEach(goalColumn => {
       if (row[goalColumn]) {
         const value = parseFloat(row[goalColumn]);
         if (!isNaN(value)) {
-          yearGroupValues[country].totalGoalsSum += value;
-          yearGroupValues[country].totalGoalsCount += 1;
+          yearGroupValues1[country].totalSum += value;
+          yearGroupValues1[country].totalCount += 1;
         }
       }
     });
   });
-  // second year group (fix later)
+  const yearGroupValues2 = {};
   secondData.forEach(row => {
     const country = row.Country;
-    if (!yearGroupValues[country]) {
-      yearGroupValues[country] = {
-        totalGoalsSum: 0, // Sum of all selected goals
-        totalGoalsCount: 0
+    if (!yearGroupValues2[country]) {
+      yearGroupValues2[country] = {
+        totalSum: 0,
+        totalCount: 0
       };
     }
     goalColumnNames.forEach(goalColumn => {
       if (row[goalColumn]) {
+        selected_goals += goalColumn;
         const value = parseFloat(row[goalColumn]);
         if (!isNaN(value)) {
-          yearGroupValues[country].totalGoalsSum += value;
-          yearGroupValues[country].totalGoalsCount += 1;
+          yearGroupValues2[country].totalSum += value;
+          yearGroupValues2[country].totalCount += 1;
         }
       }
     });
   });
-
-  console.log(yearGroupValues)
-  console.log('secondData: ',secondData)
+  return {yearGroupValues1, yearGroupValues2}
 }
+
+function fillTable(data) {
+  const tableBody = document.querySelector('table tbody');
+  tableBody.innerHTML = ''; // Clear existing rows
+
+  Object.keys(data.yearGroupValues1).forEach(country => {
+    const row = document.createElement('tr');
+
+    // Country name
+    const countryCell = document.createElement('td');
+    countryCell.textContent = country;
+    row.appendChild(countryCell);
+
+    // Year Group 1 value
+    const yearGroup1Cell = document.createElement('td');
+    const countryData1 = data.yearGroupValues1[country];
+    const yearGroupValue1 =
+      countryData1.totalCount > 0 ? (countryData1.totalSum / countryData1.totalCount).toFixed(2) : "0";
+    yearGroup1Cell.textContent = yearGroupValue1;
+    row.appendChild(yearGroup1Cell);
+
+    // Year Group 2 value (if exists, otherwise empty)
+    const yearGroup2Cell = document.createElement('td');
+    if (data.yearGroupValues2[country]) {
+      const countryData2 = data.yearGroupValues2[country];
+      const yearGroupValue2 =
+        countryData2.totalCount > 0 ? (countryData2.totalSum / countryData2.totalCount).toFixed(2) : "0";
+      yearGroup2Cell.textContent = yearGroupValue2;
+    } else {
+      yearGroup2Cell.textContent = ""; // Empty if no data
+    }
+    row.appendChild(yearGroup2Cell);
+
+    // Append row to table
+    tableBody.appendChild(row);
+  });
+}
+
 
 function filterTable() { // função que filtra a tabela
   const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/data.csv';
@@ -431,24 +468,36 @@ function filterTable() { // função que filtra a tabela
           const secondselectedYears = Array.from(secondYearSelect.selectedOptions).map(option => option.value);
           const selectedCountries = Array.from(countriesSelect.selectedOptions).map(option => option.value);
           const selectedGoals = Array.from(goalsSelect.selectedOptions).map(option => option.value);
-          console.log(selectedGoals)
+          const filters = [firstselectedYears, secondselectedYears, selectedCountries, selectedGoals];
+          console.log('filters',filters)
           let filteredData = results.data;
           let yearsResult = [];
-
+          let final_result;
+          // quando um país é selecionado e nenhum ano é selecionado
           if (selectedCountries.length > 0 && ((firstselectedYears.length == 0 && secondselectedYears.length == 0))) {
             filteredData = filterCountries(filteredData, selectedCountries);
-            const final_result = filteredTable(selectedGoals, filteredData);
+            final_result = filteredTable(selectedGoals, filteredData);
+            fillTable(final_result);
           }
+          // quando um país é selecionado e um ano (do grupo 1 ou 2) é selecionado
           if (selectedCountries.length > 0 && ((firstselectedYears.length > 0 || secondselectedYears.length > 0))) {
             filteredData = filterCountries(filteredData, selectedCountries);
+            final_result = filteredTable(selectedGoals, filteredData);
+            fillTable(final_result);
           }
+          // quando um ano (do grupo 1 ou 2) é selecionado
           if (firstselectedYears.length > 0 || secondselectedYears.length > 0) {
             yearsResult = filterYears(filteredData, firstselectedYears, secondselectedYears);
-            const final_result = filteredTable(selectedGoals, yearsResult.yeargroup1, yearsResult.yeargroup2);
+            final_result = filteredTable(selectedGoals, yearsResult.yeargroup1, yearsResult.yeargroup2);
+            fillTable(final_result);
           }
+          // quando só o objetivo é selecionado e mais nada é selecionado
           if (selectedCountries.length == 0 && firstselectedYears.length == 0 && secondselectedYears.length == 0) {
-            const final_result = filteredTable(selectedGoals, filteredData);
+            final_result = filteredTable(selectedGoals, filteredData);
+            fillTable(final_result);
           }
+          //testFilters(filters, final_result);
+          console.log(final_result)
         }
       });
     })
