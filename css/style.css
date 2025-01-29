@@ -148,3 +148,38 @@ input[type=checkbox].no-bg-change:checked:not(:disabled).tabbed:focus ~ .lever::
 .justify-text {
   text-align: justify;
 }
+
+/* collapsibles on layout test */
+
+/*
+.container {
+  width: 500px;
+  margin: 50px auto;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+.tab-button {
+  cursor: pointer;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+.tab-button.active {
+  border-bottom: 3px solid #007bff;
+}
+.tab-content {
+  display: none;
+  padding: 20px;
+}
+*/
+.tab-content.active {
+  display: block;
+}
+/* end of collapsibles */
