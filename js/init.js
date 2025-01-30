@@ -423,7 +423,6 @@ function filterTable() {
           const selectedCountries = Array.from(countriesSelect.selectedOptions).map(option => option.value);
           const selectedGoals = Array.from(goalsSelect.selectedOptions).map(option => option.value);
           const filters = [firstselectedYears, secondselectedYears, selectedCountries, selectedGoals];
-          console.log('filters',filters)
           let filteredData = results.data;
           let yearsResult = [];
           let final_result;
@@ -446,7 +445,6 @@ function filterTable() {
             final_result = filteredTable(selectedGoals, filteredData);
             fillTable(final_result);
           }
-          console.log(final_result)
         }
       });
     })
@@ -603,13 +601,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// COMEÇAM AS FUNÇÕES DE DECORAÇÃO
-
-// ao filtrar algum ano em year group 1, eu quero que apareça logo abaixo de "year group 1" a frase: Média dos anos : [lista de anos selecionados]
-// se algum objetivo for filtrado deve aparecer também "para os objetivos: [lista de objetivos selecionados (escrito da seguinte forma: "objetivos: 1,2,3,4,5 (só o número)")]"
-// a mesma coisa para year group 2.
-// Função para atualizar os rótulos abaixo dos cabeçalhos Year Group 1 e Year Group 2
-// Função para atualizar os rótulos abaixo dos cabeçalhos Year Group 1 e Year Group 2
+// COMEÇAM AS FUNÇÕES DE DECORAÇÃO (label com os filtros selecionados nos nomes das colunas)
 function updateYearGroupLabels() {
   const firstSelectedYears = Array.from(document.getElementById('first-year').selectedOptions).map(option => option.value);
   const secondSelectedYears = Array.from(document.getElementById('second-year').selectedOptions).map(option => option.value);
@@ -622,9 +614,16 @@ function updateYearGroupLabels() {
           .map(option => option.value)
           .filter(value => value !== 'select-all' && value !== 'clear-all');
   }
-
-  const goalNumbers = selectedGoals.map(value => value.match(/\d+/)).filter(Boolean);
-
+  
+  let goalNumbers = [];
+  // Se "Clear All" for escolhido, remover os objetivos da exibição
+  if (selectedGoals.includes('clear-all')) {
+      selectedGoals = [];
+      goalNumbers = [];
+  } else {
+      goalNumbers = selectedGoals.map(value => value.match(/\d+/)).filter(Boolean);
+  }
+  console.log('goalNumbers',goalNumbers)
   const yg1Label = document.getElementById('yg1-label');
   const yg2Label = document.getElementById('yg2-label');
 
@@ -638,12 +637,18 @@ function updateYearGroupLabels() {
   }
   
   if (secondSelectedYears.length === 1) {
-      yg2Text += `For the year: ${secondSelectedYears[0]}`;
+      yg2Text += `For the year ${secondSelectedYears[0]}`;
   } else if (secondSelectedYears.length > 1) {
       yg2Text += `Average of years ${secondSelectedYears.join(', ')}`;
+  } else if (secondSelectedYears.length === 0) {
+      yg2Text = '';
   }
   
-  if (goalNumbers.length > 0) {
+  if (goalNumbers.length === 1) {
+    const goalsText = ` for the goal ${goalNumbers.join(', ')}`;
+    yg1Text += goalsText;
+    yg2Text += goalsText;
+  }  else if (goalNumbers.length > 0) {
       const goalsText = ` for the goals ${goalNumbers.join(', ')}`;
       yg1Text += goalsText;
       yg2Text += goalsText;
