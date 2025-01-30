@@ -287,7 +287,7 @@ function exportTableToCSV() {
   rows.forEach(row => {
     const cells = row.querySelectorAll('th, td');
     const rowContent = Array.from(cells)
-      .map(cell => `"${cell.textContent.trim()}"`)
+      .map(cell => `"${cell.textContent}"`)
       .join(',');
     csvContent += rowContent + '\n';
   });
@@ -608,70 +608,3 @@ document.addEventListener("DOMContentLoaded", function () {
 // ao filtrar algum ano em year group 1, eu quero que apareça logo abaixo de "year group 1" a frase: Média dos anos : [lista de anos selecionados]
 // se algum objetivo for filtrado deve aparecer também "para os objetivos: [lista de objetivos selecionados (escrito da seguinte forma: "objetivos: 1,2,3,4,5 (só o número)")]"
 // a mesma coisa para year group 2.
-// Função para atualizar os rótulos abaixo dos cabeçalhos Year Group 1 e Year Group 2
-// Função para atualizar os rótulos abaixo dos cabeçalhos Year Group 1 e Year Group 2
-function updateYearGroupLabels() {
-  const firstSelectedYears = Array.from(document.getElementById('first-year').selectedOptions).map(option => option.value);
-  const secondSelectedYears = Array.from(document.getElementById('second-year').selectedOptions).map(option => option.value);
-  let selectedGoals = Array.from(document.getElementById('goals').selectedOptions).map(option => option.value);
-
-  // Se "Select All" for escolhido, incluir todos os objetivos
-  const goalsSelect = document.getElementById('goals');
-  if (selectedGoals.includes('select-all')) {
-      selectedGoals = Array.from(goalsSelect.options)
-          .map(option => option.value)
-          .filter(value => value !== 'select-all' && value !== 'clear-all');
-  }
-
-  const goalNumbers = selectedGoals.map(value => value.match(/\d+/)).filter(Boolean);
-
-  const yg1Label = document.getElementById('yg1-label');
-  const yg2Label = document.getElementById('yg2-label');
-
-  let yg1Text = '';
-  let yg2Text = '';
-
-  if (firstSelectedYears.length === 1) {
-      yg1Text += `For the year ${firstSelectedYears[0]}`;
-  } else if (firstSelectedYears.length > 1) {
-      yg1Text += `Average of years ${firstSelectedYears.join(', ')}`;
-  }
-  
-  if (secondSelectedYears.length === 1) {
-      yg2Text += `For the year: ${secondSelectedYears[0]}`;
-  } else if (secondSelectedYears.length > 1) {
-      yg2Text += `Average of years ${secondSelectedYears.join(', ')}`;
-  }
-  
-  if (goalNumbers.length > 0) {
-      const goalsText = ` for the goals ${goalNumbers.join(', ')}`;
-      yg1Text += goalsText;
-      yg2Text += goalsText;
-  }
-
-  yg1Label.textContent = yg1Text;
-  yg2Label.textContent = yg2Text;
-}
-
-// Criar os elementos de rótulo abaixo dos cabeçalhos Year Group 1 e Year Group 2
-document.addEventListener('DOMContentLoaded', function () {
-  const yg1Header = document.getElementById('yg1Header');
-  const yg2Header = document.getElementById('yg2Header');
-
-  const yg1Label = document.createElement('div');
-  yg1Label.id = 'yg1-label';
-  yg1Label.style.fontSize = '12px';
-  yg1Label.style.color = '#555';
-  yg1Header.appendChild(yg1Label);
-
-  const yg2Label = document.createElement('div');
-  yg2Label.id = 'yg2-label';
-  yg2Label.style.fontSize = '12px';
-  yg2Label.style.color = '#555';
-  yg2Header.appendChild(yg2Label);
-
-  // Atualizar os rótulos sempre que um filtro for alterado
-  document.getElementById('first-year').addEventListener('change', updateYearGroupLabels);
-  document.getElementById('second-year').addEventListener('change', updateYearGroupLabels);
-  document.getElementById('goals').addEventListener('change', updateYearGroupLabels);
-});

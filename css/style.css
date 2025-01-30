@@ -211,3 +211,7 @@ th {
 .sort-icons.down::before {
   display: none;
 }
+
+#yg2-label, #yg1-label {
+  font-weight: normal !important; 
+}
