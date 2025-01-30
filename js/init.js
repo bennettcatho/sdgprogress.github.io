@@ -566,20 +566,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const rows = Array.from(document.querySelectorAll('table tbody tr'));  // Seleciona todas as linhas da tabela
 
     rows.sort((rowA, rowB) => {
-      const cellA = rowA.cells[columnIndex].textContent.trim();
-      const cellB = rowB.cells[columnIndex].textContent.trim();
-      
-      let comparison = 0;
-
-      if (direction === 'asc') {
-        comparison = cellA.localeCompare(cellB);
-      } else if (direction === 'desc') {
-        comparison = cellB.localeCompare(cellA);
+      let cellA = rowA.cells[columnIndex].textContent.trim();
+      let cellB = rowB.cells[columnIndex].textContent.trim();
+  
+      // Verifica se os valores são numéricos
+      let numA = parseFloat(cellA.replace(',', '.'));
+      let numB = parseFloat(cellB.replace(',', '.'));
+  
+      // Usa números para comparação se forem válidos
+      if (!isNaN(numA) && !isNaN(numB)) {
+        return direction === 'asc' ? numA - numB : numB - numA;
+      } else {
+        return direction === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
       }
-      
-      return comparison;
     });
-
+  
     // Reorganiza as linhas na tabela de acordo com a ordenação
     const tbody = document.querySelector('table tbody');
     rows.forEach(row => tbody.appendChild(row));
