@@ -645,15 +645,15 @@ function updateYearGroupLabels() {
   }
   
   if (goalNumbers.length === 1) {
-    const goalsText = ` considering only the goal ${goalNumbers.join(', ')}`;
+    const goalsText = ` considering only goal ${goalNumbers.join(', ')}`;
     yg1Text += goalsText;
     yg2Text += goalsText;
-  }  else if (goalNumbers.length > 0) {
-      const goalsText = ` considering only the goals ${goalNumbers.join(', ')}`;
+  }  else if (goalNumbers.length > 0 && goalNumbers.length < 17) {
+      const goalsText = ` considering only goals ${goalNumbers.join(', ')}`;
       yg1Text += goalsText;
       yg2Text += goalsText;
-  } else if (goalNumbers.length === 0) {
-    const goalsText = ` considering all the goals`;
+  } else if (goalNumbers.length === 0 || goalNumbers.length === 17) {
+    const goalsText = ` considering all goals`;
     yg1Text += goalsText;
     yg2Text += goalsText;
 }

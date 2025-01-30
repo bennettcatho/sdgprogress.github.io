@@ -64,24 +64,31 @@
           <h3><i class="mdi-content-send color1-text"></i></h3>
           <h4>Progress Rank</h4>
           <p class="left-align light justify-text">
-            Select the years you want to compare. If you select more than one year on the "First year" a mean of the years you have selected will be calculated. The same for "Second year". If a year have already been selected in the first selector, it may not be selected again in the second.
+            Select the years you want to compare.
+            If you choose multiple years in "Period 1" their average will be calculated.
+            The same applies to "Period 2" A year selected in the first dropdown cannot be chosen again in the second.  
+            You can also select countries and goals to compare. The table will display each country's score for each goal in the selected period.  
+            If you select multiple goals, their average will be calculated based on available data.
+            If a country has no data for a specific goal in a given year, the score will be 0.
+            However, if data exists for some goals but not others, only the available scores will be shown.
+            You can sort the table by clicking on the arrows next to the column names.
           </p>
         </div>
         <div class="col s12 center">
           <p>Years</p>
           <div class="col s6 no-padding">
             <div class="input-field col s12">
-              <p>Year Group 1</p>
+              <p>Period 1</p>
               <select multiple id="first-year">
-                <label>Year Group 1</label>
+                <label>Period 1</label>
               </select>
             </div>
           </div>
           <div class="col s6 no-padding">
             <div class="input-field col s12">
-              <p>Year Group 2</p>
+              <p>Period 2</p>
               <select multiple id="second-year">
-                <label>Year Group 2</label>
+                <label>Period 2</label>
               </select>
             </div>
           </div>
