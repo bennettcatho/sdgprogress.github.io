@@ -418,17 +418,15 @@ function filteredTable(goals = [], firstData = [], secondData = []) {
 
 function fillTable(data) {
   const tableBody = document.querySelector('table tbody');
-  tableBody.innerHTML = ''; // Clear existing rows
+  tableBody.innerHTML = '';
 
   Object.keys(data.yearGroupValues1).forEach(country => {
     const row = document.createElement('tr');
 
-    // Country name
     const countryCell = document.createElement('td');
     countryCell.textContent = country;
     row.appendChild(countryCell);
 
-    // Year Group 1 value
     const yearGroup1Cell = document.createElement('td');
     const countryData1 = data.yearGroupValues1[country];
     const yearGroupValue1 =
@@ -436,7 +434,6 @@ function fillTable(data) {
     yearGroup1Cell.textContent = yearGroupValue1;
     row.appendChild(yearGroup1Cell);
 
-    // Year Group 2 value (if exists, otherwise empty)
     const yearGroup2Cell = document.createElement('td');
     if (data.yearGroupValues2[country]) {
       const countryData2 = data.yearGroupValues2[country];
@@ -444,7 +441,7 @@ function fillTable(data) {
         countryData2.totalCount > 0 ? (countryData2.totalSum / countryData2.totalCount).toFixed(2) : "0";
       yearGroup2Cell.textContent = yearGroupValue2;
     } else {
-      yearGroup2Cell.textContent = ""; // Empty if no data
+      yearGroup2Cell.textContent = "";
     }
     row.appendChild(yearGroup2Cell);
 
@@ -452,7 +449,6 @@ function fillTable(data) {
     tableBody.appendChild(row);
   });
 }
-
 
 function filterTable() { // função que filtra a tabela
   const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/data.csv';
@@ -473,30 +469,25 @@ function filterTable() { // função que filtra a tabela
           let filteredData = results.data;
           let yearsResult = [];
           let final_result;
-          // quando um país é selecionado e nenhum ano é selecionado
           if (selectedCountries.length > 0 && ((firstselectedYears.length == 0 && secondselectedYears.length == 0))) {
             filteredData = filterCountries(filteredData, selectedCountries);
             final_result = filteredTable(selectedGoals, filteredData);
             fillTable(final_result);
           }
-          // quando um país é selecionado e um ano (do grupo 1 ou 2) é selecionado
           if (selectedCountries.length > 0 && ((firstselectedYears.length > 0 || secondselectedYears.length > 0))) {
             filteredData = filterCountries(filteredData, selectedCountries);
             final_result = filteredTable(selectedGoals, filteredData);
             fillTable(final_result);
           }
-          // quando um ano (do grupo 1 ou 2) é selecionado
           if (firstselectedYears.length > 0 || secondselectedYears.length > 0) {
             yearsResult = filterYears(filteredData, firstselectedYears, secondselectedYears);
             final_result = filteredTable(selectedGoals, yearsResult.yeargroup1, yearsResult.yeargroup2);
             fillTable(final_result);
           }
-          // quando só o objetivo é selecionado e mais nada é selecionado
           if (selectedCountries.length == 0 && firstselectedYears.length == 0 && secondselectedYears.length == 0) {
             final_result = filteredTable(selectedGoals, filteredData);
             fillTable(final_result);
           }
-          //testFilters(filters, final_result);
           console.log(final_result)
         }
       });
