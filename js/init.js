@@ -463,4 +463,77 @@ goalsSelect.addEventListener('change', filterTable);
 
 // COMEÇAM AS FUNÇÕES DE ORDENAÇÃO
 
+// filtragem do país
+document.addEventListener("DOMContentLoaded", function () {
+  const header = document.getElementById("countryHeader")
+  const icon = header.querySelector(".sort-icons")
+
+  header.addEventListener("click", function () {
+    let order = header.getAttribute("data-order")
+
+    if (order === "both") {
+      header.setAttribute("data-order", "down")
+      icon.classList.add("down")
+      icon.classList.remove("up")
+    } else if (order === "down") {
+      header.setAttribute("data-order", "up")
+      icon.classList.add("up")
+      icon.classList.remove("down")
+    } else {
+      header.setAttribute("data-order", "both")
+      icon.classList.remove("up", "down")
+    }
+  })
+})
+
+document.addEventListener("DOMContentLoaded", function () {
+  const header = document.getElementById("yg1Header")
+  const icon = header.querySelector(".sort-icons")
+
+  header.addEventListener("click", function () {
+    let order = header.getAttribute("data-order")
+
+    if (order === "both") {
+      header.setAttribute("data-order", "down")
+      icon.classList.add("down")
+      icon.classList.remove("up")
+    } else if (order === "down") {
+      header.setAttribute("data-order", "up")
+      icon.classList.add("up")
+      icon.classList.remove("down")
+    } else {
+      header.setAttribute("data-order", "both")
+      icon.classList.remove("up", "down")
+    }
+  })
+})
+
+document.addEventListener("DOMContentLoaded", function () {
+  const header = document.getElementById("yg2Header")
+  const icon = header.querySelector(".sort-icons")
+
+  header.addEventListener("click", function () {
+    let order = header.getAttribute("data-order")
+
+    if (order === "both") {
+      header.setAttribute("data-order", "down")
+      icon.classList.add("down")
+      icon.classList.remove("up")
+    } else if (order === "down") {
+      header.setAttribute("data-order", "up")
+      icon.classList.add("up")
+      icon.classList.remove("down")
+    } else {
+      header.setAttribute("data-order", "both")
+      icon.classList.remove("up", "down")
+    }
+  })
+})
+
+
+// filtragem year group 1
+
+// filtragem year group 2
+
+
 // COMEÇAM AS FUNÇÕES DE DECORAÇÃO

@@ -148,38 +148,66 @@ input[type=checkbox].no-bg-change:checked:not(:disabled).tabbed:focus ~ .lever::
 .justify-text {
   text-align: justify;
 }
-
-/* collapsibles on layout test */
-
-/*
-.container {
-  width: 500px;
-  margin: 50px auto;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-}
-.tab-buttons {
-  display: flex;
-  justify-content: space-around;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 10px;
-}
-.tab-button {
-  cursor: pointer;
-  padding: 10px 20px;
-  font-weight: bold;
-}
-.tab-button.active {
-  border-bottom: 3px solid #007bff;
-}
-.tab-content {
-  display: none;
-  padding: 20px;
-}
-*/
 .tab-content.active {
   display: block;
 }
-/* end of collapsibles */
+
+/* sorting stuff */
+
+/* Ensures <th> elements stay in a row and behave correctly */
+th {
+  text-align: left;
+  padding: 12px;
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* Wrapper to properly align text and icons */
+.th-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Keep text left-aligned */
+.th-content .text {
+  flex-grow: 1; /* Takes available space, pushing arrows to the right */
+}
+
+/* Ensure the sorting icons stay on the right */
+.sort-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  cursor: pointer;
+  padding-left: 25px; /* Adds 25px space between text and icons */
+}
+
+/* Default arrows */
+.sort-icons::before,
+.sort-icons::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.sort-icons::before {
+  border-width: 0 6px 8px 6px;
+  border-color: transparent transparent #808588 transparent;
+}
+
+.sort-icons::after {
+  border-width: 8px 6px 0 6px;
+  border-color: #808588 transparent transparent transparent;
+}
+
+/* Show only one arrow at a time */
+.sort-icons.up::after {
+  display: none;
+}
+.sort-icons.down::before {
+  display: none;
+}

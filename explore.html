@@ -68,16 +68,6 @@
           </p>
         </div>
         <div class="col s12 center">
-            
-
-    
-
-
-
-
-
-
-
           <p>Years</p>
           <div class="col s6 no-padding">
             <div class="input-field col s12">
@@ -140,18 +130,33 @@
           </div>
         </div>
         <div class="col s12 center top-space">
-          <table class="highlight responsive-table">
-            <thead>
-              <tr>
-                <th>Country</th>
-                <th>Year Group 1</th>
-                <th>Year Group 2</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Rows will be dynamically added here -->
-            </tbody>
-          </table>
+            <table class="highlight responsive-table">
+                <thead>
+                  <tr>
+                    <th id="countryHeader" class="sortable" data-order="both">
+                      <div class="th-content">
+                        <span class="text">Country</span>
+                        <span class="sort-icons"></span>
+                      </div>
+                    </th>
+                    <th id="yg1Header" class="sortable" data-order="both">
+                      <div class="th-content">
+                        <span class="text">Year Group 1</span>
+                        <span class="sort-icons"></span>
+                      </div>
+                    </th>
+                    <th id="yg2Header" class="sortable" data-order="both">
+                      <div class="th-content">
+                        <span class="text">Year Group 2</span>
+                        <span class="sort-icons"></span>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Rows will be dynamically added here -->
+                </tbody>
+              </table>
         </div>   
         <div class="col s12 center top-space">
           <button id="export-csv-btn" class="btn waves-effect waves-light color1">Export as CSV</button>
