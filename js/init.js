@@ -608,12 +608,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const tbody = document.querySelector('table tbody');
 
     rows.sort((rowA, rowB) => {
-      const cellA = rowA.cells[0].textContent.trim();  // Ordena pela primeira coluna (Country)
+      const cellA = rowA.cells[0].textContent.trim();
       const cellB = rowB.cells[0].textContent.trim();
       return cellA.localeCompare(cellB);
     });
 
-    rows.forEach(row => tbody.appendChild(row));  // Reorganiza as linhas conforme a ordem original
+    rows.forEach(row => tbody.appendChild(row));
   }
 });
 
@@ -624,7 +624,6 @@ function updateYearGroupLabels() {
   const secondSelectedYears = Array.from(document.getElementById('second-year').selectedOptions).map(option => option.value);
   let selectedGoals = Array.from(document.getElementById('goals').selectedOptions).map(option => option.value);
 
-  // Se "Select All" for escolhido, incluir todos os objetivos
   const goalsSelect = document.getElementById('goals');
   if (selectedGoals.includes('select-all')) {
       selectedGoals = Array.from(goalsSelect.options)
@@ -633,7 +632,6 @@ function updateYearGroupLabels() {
   }
   
   let goalNumbers = [];
-  // Se "Clear All" for escolhido, remover os objetivos da exibição
   if (selectedGoals.includes('clear-all')) {
       selectedGoals = [];
       goalNumbers = [];
@@ -661,11 +659,11 @@ function updateYearGroupLabels() {
   }
   
   if (goalNumbers.length === 1) {
-    const goalsText = ` considering only goal ${goalNumbers.join(', ')}`;
+    const goalsText = ` considering goal ${goalNumbers.join(', ')}`;
     yg1Text += goalsText;
     yg2Text += goalsText;
   }  else if (goalNumbers.length > 0 && goalNumbers.length < 17) {
-      const goalsText = ` considering only goals ${goalNumbers.join(', ')}`;
+      const goalsText = ` considering goals ${goalNumbers.join(', ')}`;
       yg1Text += goalsText;
       yg2Text += goalsText;
   } else if (goalNumbers.length === 0 || goalNumbers.length === 17) {
@@ -695,7 +693,6 @@ document.addEventListener('DOMContentLoaded', function () {
   yg2Label.style.color = '#555';
   yg2Header.appendChild(yg2Label);
 
-  // Atualizar os rótulos sempre que um filtro for alterado
   document.getElementById('first-year').addEventListener('change', updateYearGroupLabels);
   document.getElementById('second-year').addEventListener('change', updateYearGroupLabels);
   document.getElementById('goals').addEventListener('change', updateYearGroupLabels);
@@ -714,8 +711,31 @@ document.getElementById("clean-filter-btn").addEventListener("click", () => {
     }
   });
   filterTable();
+  const yg1Header = document.getElementById('yg1-label');
+  yg1Header.textContent = '';
+  const yg2Header = document.getElementById('yg2-label');
+  yg2Header.textContent = '';
 
   loadCSVData();
   initializeCountrySelector();
   initializeGoalsSelector();
 });
+
+// ação do botão generate charts
+// opcao 1 - mostrar os gráficos na própria página (acho que não é uma boa)
+/*
+document.addEventListener("DOMContentLoaded", function () {
+  const generateChartsBtn = document.getElementById("generate-charts-btn");
+  const chartsDiv = document.getElementById("charts");
+
+  if (!generateChartsBtn || !chartsDiv) {
+      console.error("Element not found!");
+      return;
+  }
+
+  generateChartsBtn.addEventListener("click", function () {
+      chartsDiv.style.display = chartsDiv.style.display === "none" || chartsDiv.style.display === "" ? "block" : "none";
+  });
+});
+*/
+// opcao 2 - mostrar os gráficos em uma Modal (acho que é melhor)
