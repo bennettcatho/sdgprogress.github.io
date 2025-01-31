@@ -22,7 +22,8 @@ $(document).ready(function(){
   $('select').formSelect();
 });
 
-// populando os filtros e a tabela pela primeira vez
+// populando os filtros pela primeira vez
+// populando os dois filtros de anos
 function loadCSVData() {
   const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/years.csv';
   
@@ -85,7 +86,7 @@ window.onload = function() {
   loadCSVData();
 };
 
-
+// populando o filtro de países
 function initializeCountrySelector() {
   const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/countries.csv'; // Replace with your raw Gist URL
 
@@ -147,6 +148,7 @@ function initializeCountrySelector() {
 
 initializeCountrySelector();
 
+// populando o filtro de objetivos
 function initializeGoalsSelector() {
   const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/goals.csv';
   
@@ -208,6 +210,7 @@ function initializeGoalsSelector() {
 
 initializeGoalsSelector();
 
+// inicializando a tabela
 function updateTableWithYearGroups() {
   const csvURL = 'https://raw.githubusercontent.com/bennettcatho/sdgprogress.github.io/refs/heads/main/data/data.csv';
 
@@ -230,8 +233,6 @@ function updateTableWithYearGroups() {
               };
             }
 
-            yearGroupValues[country].yearCount += 1;
-
             Object.keys(row).forEach(key => {
               if (key.startsWith('goal') && row[key]) {
                 const value = parseFloat(row[key]);
@@ -247,7 +248,7 @@ function updateTableWithYearGroups() {
             const countryData = yearGroupValues[country];
             countryData.yearGroupValue =
               countryData.totalGoalsSum /
-              (countryData.totalGoalsCount);
+              (countryData.totalGoalsCount || 1);
           });
 
           const tableBody = document.querySelector('table tbody');
@@ -261,12 +262,16 @@ function updateTableWithYearGroups() {
             row.appendChild(countryCell);
 
             const yearGroup1Cell = document.createElement('td');
-            const yearGroup2Cell = document.createElement('td');
-            const yearGroupValue = yearGroupValues[country].yearGroupValue.toFixed(2);
-            yearGroup1Cell.textContent = yearGroupValue;
-            yearGroup2Cell.textContent = yearGroupValue;
+            yearGroup1Cell.textContent = yearGroupValues[country].yearGroupValue.toFixed(2);
             row.appendChild(yearGroup1Cell);
+
+            const yearGroup2Cell = document.createElement('td');
+            yearGroup2Cell.textContent = ''; // Mantém a coluna vazia
             row.appendChild(yearGroup2Cell);
+
+            const progressCell = document.createElement('td');
+            progressCell.textContent = ''; // Nova coluna Progress vazia
+            row.appendChild(progressCell);
 
             tableBody.appendChild(row);
           });
@@ -277,6 +282,7 @@ function updateTableWithYearGroups() {
       console.error('Error loading data:', error);
     });
 }
+
 updateTableWithYearGroups();
 
 // Função que exporta a tabela em CSV
@@ -396,15 +402,24 @@ function fillTable(data) {
     row.appendChild(yearGroup1Cell);
 
     const yearGroup2Cell = document.createElement('td');
+    let yearGroupValue2 = "";
     if (data.yearGroupValues2[country]) {
       const countryData2 = data.yearGroupValues2[country];
-      const yearGroupValue2 =
-        countryData2.totalCount > 0 ? (countryData2.totalSum / countryData2.totalCount).toFixed(2) : "0";
+      yearGroupValue2 = countryData2.totalCount > 0 ? (countryData2.totalSum / countryData2.totalCount).toFixed(2) : "0";
       yearGroup2Cell.textContent = yearGroupValue2;
     } else {
       yearGroup2Cell.textContent = "";
     }
     row.appendChild(yearGroup2Cell);
+
+    const progressCell = document.createElement('td');
+    if (yearGroupValue1 !== "" && yearGroupValue2 !== "") {
+      progressCell.textContent = (parseFloat(yearGroupValue2) - parseFloat(yearGroupValue1)).toFixed(2);
+    } else {
+      progressCell.textContent = "";
+    }
+    row.appendChild(progressCell);
+
     tableBody.appendChild(row);
   });
 }
@@ -562,17 +577,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Função que ordena a tabela
   function sortTable(header, direction) {
-    const columnIndex = Array.from(header.parentNode.children).indexOf(header);  // Índice da coluna
-    const rows = Array.from(document.querySelectorAll('table tbody tr'));  // Seleciona todas as linhas da tabela
+    const columnIndex = Array.from(header.parentNode.children).indexOf(header); // Índice da coluna
+    const rows = Array.from(document.querySelectorAll('table tbody tr')); // Seleciona todas as linhas da tabela
 
     rows.sort((rowA, rowB) => {
       let cellA = rowA.cells[columnIndex].textContent.trim();
       let cellB = rowB.cells[columnIndex].textContent.trim();
-  
-      // Verifica se os valores são numéricos
-      let numA = parseFloat(cellA.replace(',', '.'));
-      let numB = parseFloat(cellB.replace(',', '.'));
-  
+
+      // Converte para número, assumindo 0 caso seja vazio ou inválido
+      let numA = cellA === "" ? 0 : parseFloat(cellA.replace(',', '.'));
+      let numB = cellB === "" ? 0 : parseFloat(cellB.replace(',', '.'));
+
       // Usa números para comparação se forem válidos
       if (!isNaN(numA) && !isNaN(numB)) {
         return direction === 'asc' ? numA - numB : numB - numA;
@@ -580,11 +595,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return direction === 'asc' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
       }
     });
-  
+
     // Reorganiza as linhas na tabela de acordo com a ordenação
     const tbody = document.querySelector('table tbody');
     rows.forEach(row => tbody.appendChild(row));
   }
+
 
   // Função que reinicia a ordenação, mantendo a ordem original
   function resetSort() {
@@ -624,7 +640,6 @@ function updateYearGroupLabels() {
   } else {
       goalNumbers = selectedGoals.map(value => value.match(/\d+/)).filter(Boolean);
   }
-  console.log('goalNumbers',goalNumbers)
   const yg1Label = document.getElementById('yg1-label');
   const yg2Label = document.getElementById('yg2-label');
 
@@ -684,4 +699,23 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('first-year').addEventListener('change', updateYearGroupLabels);
   document.getElementById('second-year').addEventListener('change', updateYearGroupLabels);
   document.getElementById('goals').addEventListener('change', updateYearGroupLabels);
+});
+
+
+// ação do botão que limpa todos os filtros (corrigir o bug de limpar também o label descritivo embaixo de Score Period 1 e Score Period 2)
+document.getElementById("clean-filter-btn").addEventListener("click", () => {
+  firstYearSelect.value = "";
+  secondYearSelect.value = "";
+  countriesSelect.value = "";
+  goalsSelect.value = "";
+  [firstYearSelect, secondYearSelect, countriesSelect, goalsSelect].forEach(select => {
+    if (select.multiple) {
+      Array.from(select.options).forEach(option => option.selected = false);
+    }
+  });
+  filterTable();
+
+  loadCSVData();
+  initializeCountrySelector();
+  initializeGoalsSelector();
 });

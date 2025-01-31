@@ -114,6 +114,26 @@
           </div>
         </div>
         <div class="col s12 center top-space">
+            <div class="col s4 center top-space">
+                <button id="export-csv-btn" class="btn waves-effect waves-light color1">Export as CSV</button>
+            </div>
+            <div class="col s4 center top-space">
+                <button id="generate-charts-btn" class="btn waves-effect waves-light color1">Generate Charts</button>
+            </div>
+            <div class="col s4 center top-space">
+                <button id="clean-filter-btn" class="btn waves-effect waves-light color1">Clean all filters</button>
+            </div>
+        </div>        
+        <div class="col s12 center top-space" style="display: none !important;">
+            <div class="col s6 center top-space">
+                Chart 1
+            </div>
+            <div class="col s6 center top-space">
+                Chart 2
+            </div>
+        </div>  
+      </div>
+        <div class="col s12 center top-space">
             <table class="highlight responsive-table">
                 <thead>
                   <tr>
@@ -135,6 +155,12 @@
                         <span class="sort-icons"></span>
                       </div>
                     </th>
+                    <th id="progressHeader" class="sortable" data-order="both">
+                      <div class="th-content">
+                        <span class="text">Progress</span>
+                        <span class="sort-icons"></span>
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -142,15 +168,6 @@
                 </tbody>
               </table>
         </div>   
-        <div class="col s12 center top-space">
-            <div class="col s6 center top-space">
-                <button id="export-csv-btn" class="btn waves-effect waves-light color1">Export as CSV</button>
-            </div>
-            <div class="col s6 center top-space">
-                <button id="export-csv-btn" class="btn waves-effect waves-light color1">Generate Charts</button>
-            </div>
-        </div>     
-      </div>
 
     </div>
   </div>
