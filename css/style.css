@@ -215,3 +215,33 @@ th {
 #yg2-label, #yg1-label {
   font-weight: normal !important; 
 }
+
+.responsive-logo {
+  height: 100%;  /* Make the logo take full height of the navbar */
+  max-height: 60px;  /* Set a max height to prevent it from being too large */
+  width: auto;  /* Maintain aspect ratio */
+}
+.brand-logo img {
+  height: 100%;   /* Make the logo scale properly */
+  max-height: 60px;  /* Adjust max height for desktop */
+  width: auto;  /* Maintain aspect ratio */
+}
+
+/* Adjust logo size for smaller screens */
+@media screen and (max-width: 992px) {
+  .brand-logo img {
+    max-height: 50px; /* Slightly smaller logo on tablets */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .brand-logo {
+    position: absolute; /* Center logo on mobile */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .brand-logo img {
+    max-height: 40px; /* Smaller logo for mobile */
+  }
+}
