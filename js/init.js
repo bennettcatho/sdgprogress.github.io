@@ -103,6 +103,8 @@ function initializeCountrySelector() {
           const countries = data.map(row => row['Country']);
 
           const countriesSelect = document.getElementById('countries');
+          countriesSelect.innerHTML = '';
+
 
           const clearOption = document.createElement('option');
           clearOption.value = 'clear-all';
@@ -164,6 +166,7 @@ function initializeGoalsSelector() {
           const data = results.data;
           const goals = data.map(row => row['Goals']);
           const goalsSelect = document.getElementById('goals');
+          goalsSelect.innerHTML = '';
           const clearOption = document.createElement('option');
           clearOption.value = 'clear-all';
           clearOption.textContent = 'Clear All';
@@ -323,7 +326,7 @@ const goalsSelect = document.getElementById('goals');
 
 function filterYears(data, yeargroup1 = [], yeargroup2 = []) {
   yeargroup1 = data.filter(row => yeargroup1.includes(row.year));
-  yeargroup2 = data.filter(row => yeargroup2.includes(row.year)); //|| [];
+  yeargroup2 = data.filter(row => yeargroup2.includes(row.year));
   return {yeargroup1, yeargroup2};
 }
 
