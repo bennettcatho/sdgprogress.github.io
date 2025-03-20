@@ -1,0 +1,168 @@
+Country,Estacionários,Não estacionários,Dados insuficientes,Séries constantes,Séries com erro de ajuste perfeito
+Afghanistan,7,8,2,0,0
+Albania,0,17,0,0,0
+Algeria,4,12,0,1,0
+Angola,1,16,0,0,0
+Argentina,0,17,0,0,0
+Armenia,2,14,1,0,0
+Australia,4,13,0,0,0
+Austria,5,11,1,0,0
+Azerbaijan,4,12,1,0,0
+"Bahamas, The",3,12,2,0,0
+Bahrain,4,11,2,0,0
+Bangladesh,1,16,0,0,0
+Barbados,3,12,2,0,0
+Belarus,2,14,1,0,0
+Belgium,2,15,0,0,0
+Belize,5,11,1,0,0
+Benin,4,13,0,0,0
+Bhutan,4,12,1,0,0
+Bolivia,2,14,1,0,0
+Bosnia and Herzegovina,4,13,0,0,0
+Botswana,1,15,1,0,0
+Brazil,4,13,0,0,0
+Brunei Darussalam,4,11,2,0,0
+Bulgaria,3,14,0,0,0
+Burkina Faso,2,13,1,1,0
+Burundi,6,7,1,3,0
+Cabo Verde,5,12,0,0,0
+Cambodia,2,13,2,0,0
+Cameroon,3,13,0,1,0
+Canada,3,13,0,1,0
+Central African Republic,1,14,1,1,0
+Chad,0,16,1,0,0
+Chile,4,13,0,0,0
+China,3,13,0,1,0
+Colombia,3,13,0,1,0
+Comoros,2,14,0,1,0
+"Congo, Dem. Rep.",2,15,0,0,0
+"Congo, Rep.",2,15,0,0,0
+Costa Rica,1,16,0,0,0
+Cote d'Ivoire,3,13,0,1,0
+Croatia,3,13,0,1,0
+Cuba,5,10,2,0,0
+Cyprus,6,10,0,1,0
+Czechia,3,13,1,0,0
+Denmark,5,12,0,0,0
+Djibouti,6,11,0,0,0
+Dominican Republic,4,13,0,0,0
+Ecuador,7,10,0,0,0
+"Egypt, Arab Rep.",6,11,0,0,0
+El Salvador,1,16,0,0,0
+Estonia,4,13,0,0,0
+Eswatini,1,15,1,0,0
+Ethiopia,3,13,1,0,0
+Fiji,2,15,0,0,0
+Finland,6,11,0,0,0
+France,2,15,0,0,0
+Gabon,5,12,0,0,0
+"Gambia, The",3,14,0,0,0
+Georgia,3,14,0,0,0
+Germany,3,14,0,0,0
+Ghana,1,16,0,0,0
+Greece,4,13,0,0,0
+Guatemala,6,11,0,0,0
+Guinea,2,15,0,0,0
+Guinea-Bissau,3,12,0,2,0
+Guyana,3,13,1,0,0
+Haiti,1,15,0,1,0
+Honduras,4,13,0,0,0
+Hungary,4,12,1,0,0
+Iceland,5,10,0,2,0
+India,5,12,0,0,0
+Indonesia,3,14,0,0,0
+"Iran, Islamic Rep.",3,14,0,0,0
+Iraq,4,13,0,0,0
+Ireland,2,14,0,1,0
+Israel,4,13,0,0,0
+Italy,2,15,0,0,0
+Jamaica,1,16,0,0,0
+Japan,5,12,0,0,0
+Jordan,2,15,0,0,0
+Kazakhstan,2,14,1,0,0
+Kenya,2,15,0,0,0
+"Korea, Rep.",3,13,0,1,0
+Kuwait,2,13,2,0,0
+Kyrgyz Republic,3,13,1,0,0
+Lao PDR,1,15,1,0,0
+Latvia,3,14,0,0,0
+Lebanon,1,14,0,2,0
+Lesotho,2,13,1,1,0
+Liberia,2,15,0,0,0
+Lithuania,6,11,0,0,0
+Luxembourg,2,14,1,0,0
+Madagascar,3,13,0,1,0
+Malawi,4,11,1,1,0
+Malaysia,5,12,0,0,0
+Maldives,5,12,0,0,0
+Mali,2,13,1,1,0
+Malta,1,15,0,1,0
+Mauritania,4,13,0,0,0
+Mauritius,1,16,0,0,0
+Mexico,4,13,0,0,0
+Moldova,5,11,1,0,0
+Mongolia,6,10,1,0,0
+Montenegro,3,14,0,0,0
+Morocco,3,14,0,0,0
+Mozambique,2,15,0,0,0
+Myanmar,3,14,0,0,0
+Namibia,2,15,0,0,0
+Nepal,3,13,1,0,0
+Netherlands,3,13,0,1,0
+New Zealand,3,12,1,1,0
+Nicaragua,5,12,0,0,0
+Niger,1,14,1,1,0
+Nigeria,5,12,0,0,0
+North Macedonia,3,13,1,0,0
+Norway,4,13,0,0,0
+Oman,3,12,2,0,0
+Pakistan,2,15,0,0,0
+Panama,5,12,0,0,0
+Papua New Guinea,2,14,0,1,0
+Paraguay,2,14,1,0,0
+Peru,4,13,0,0,0
+Philippines,3,14,0,0,0
+Poland,2,15,0,0,0
+Portugal,1,16,0,0,0
+Qatar,3,11,2,1,0
+Romania,3,14,0,0,0
+Russian Federation,4,13,0,0,0
+Rwanda,4,12,1,0,0
+Sao Tome and Principe,4,12,0,1,0
+Saudi Arabia,3,12,2,0,0
+Senegal,4,13,0,0,0
+Serbia,0,16,1,0,0
+Sierra Leone,4,13,0,0,0
+Singapore,6,9,2,0,0
+Slovak Republic,2,14,1,0,0
+Slovenia,1,14,0,2,0
+Somalia,6,9,1,1,0
+South Africa,4,13,0,0,0
+South Sudan,6,10,1,0,0
+Spain,5,12,0,0,0
+Sri Lanka,1,16,0,0,0
+Sudan,6,11,0,0,0
+Suriname,1,13,0,3,0
+Sweden,3,14,0,0,0
+Switzerland,3,13,1,0,0
+Syrian Arab Republic,2,15,0,0,0
+Tajikistan,0,16,1,0,0
+Tanzania,3,14,0,0,0
+Thailand,4,13,0,0,0
+Togo,3,12,0,2,0
+Trinidad and Tobago,2,14,1,0,0
+Tunisia,6,10,0,1,0
+Türkiye,3,14,0,0,0
+Turkmenistan,3,10,2,2,0
+Uganda,3,12,1,1,0
+Ukraine,3,13,1,0,0
+United Arab Emirates,6,11,0,0,0
+United Kingdom,3,13,0,1,0
+United States,1,15,0,1,0
+Uruguay,2,15,0,0,0
+Uzbekistan,2,14,1,0,0
+"Venezuela, RB",2,15,0,0,0
+Vietnam,5,12,0,0,0
+"Yemen, Rep.",4,13,0,0,0
+Zambia,1,15,1,0,0
+Zimbabwe,5,11,1,0,0

@@ -1,4 +1,4 @@
-id,Country,year,Yearly Score,goal1,goal2,goal3,goal4,goal5,goal6,goal7,goal8,goal9,goal10,goal11,goal12,goal13,goal14,goal15,goal16,goal17
+id,country,year,yearly_score,goal1,goal2,goal3,goal4,goal5,goal6,goal7,goal8,goal9,goal10,goal11,goal12,goal13,goal14,goal15,goal16,goal17
 AFG,Afghanistan,2020,"47,47",29,38,37,43,26,49,36,47,11,,36,95,99,,78,45,43
 AFG,Afghanistan,2021,"46,27",20,38,35,35,29,50,37,45,11,,34,95,99,,78,45,43
 AFG,Afghanistan,2019,"46,13",30,40,36,43,24,45,36,46,11,,35,95,99,,65,46,41
