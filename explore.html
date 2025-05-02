@@ -18,13 +18,10 @@
       <ul class="right hide-on-med-and-down">
         <li><a href="./index.html">Home</a></li>
         <li><a href="./explore.html"><b>Explore</b></a></li>
-        <li><a href="./machinelearning.html">Machine Learning</a></li>
       </ul>
-
       <ul id="nav-mobile" class="sidenav">
         <li><a href="./index.html">Home</a></li>
         <li><a href="./explore.html">Explore</a></li>
-        <li><a href="./machinelearning.html">Machine Learning</a></li>
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
@@ -38,18 +35,6 @@
         <div class="row center">
           <h5 class="header col s12 light"> Analyzing the progress toward achieving the United Nations Sustainable Development Goals (SDGs).</h5>
         </div>
-        <div class="row center btn-container-over">
-          <div class="col s12 center btn-container">
-            <div class="col s6 center">
-              <a href="./index.html" class="btn-large waves-effect waves-light color1 lighten-1">Home</a>
-            </div>
-            <div class="col s6 center">
-              <a href="./machinelearning.html" class="btn-large waves-effect waves-light color1 lighten-1">Machine Learning</a>
-            </div>
-          </div>
-        </div>
-        <br><br>
-
       </div>
     </div>
     <div class="parallax parallax-overlay">
@@ -114,14 +99,12 @@
             </div>
           </div>
         </div>
-        <div class="col s12 center top-space">
-            <div class="col s4 center top-space">
+
+        <div class="col s12 center">
+            <div class="col s6 center top-space">
                 <button id="export-csv-btn" class="btn waves-effect waves-light color1">Export as CSV</button>
             </div>
-            <div class="col s4 center top-space">
-                <button id="generate-charts-btn" class="btn waves-effect waves-light color1">Generate Charts</button>
-            </div>
-            <div class="col s4 center top-space">
+            <div class="col s6 center top-space">
                 <button id="clean-filter-btn" class="btn waves-effect waves-light color1">Clear filters</button>
             </div>
         </div>        
@@ -168,10 +151,27 @@
                   <!-- Rows will be dynamically added here -->
                 </tbody>
               </table>
-        </div>   
+        </div>  
+        <div class="col s12 center">
+          <div class="col s4 center top-space">
+            <button id="generate-charts-btn" class="btn waves-effect waves-light color1">Generate Charts</button>
+          </div>
+        </div> 
+    </div>
 
+    <div class="row">
+      <div class="col s12 center" id="charts_space">
+        
+        <div class="col s6 center top-space" id="charts_left_space">
+          <div id="chart1"></div>
+        </div>
+        <div class="col s6 center top-space" id="charts_right_space">
+          <div id="chart2"></div>
+        </div>
+      </div> 
     </div>
   </div>
+  
 
   <footer class="page-footer color1">
     <div class="container">
