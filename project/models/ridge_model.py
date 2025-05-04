@@ -7,10 +7,10 @@ def run_ridge_regression(df, notnull_df, windows, alpha=1.0):
         country = row['country']
         goal = row['goal']
         data = df[df['country'] == country]
-        min_year, max_year = data['year'].min(), data['year'].max()
+        min_year, max_year = 2000, 2018
 
         # Define prediction years (2018-2023)
-        prediction_years = range(2018, 2024)  # Years 2018-2023
+        prediction_years = range(2019, 2024)
 
         for window in windows:
             for start_year in range(min_year, max_year - window + 1):

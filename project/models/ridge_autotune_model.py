@@ -8,10 +8,10 @@ def run_ridge_autotune_regression(df, notnull_df, windows, alphas=[0.01, 0.1, 1.
         country = row['country']
         goal = row['goal']
         data = df[df['country'] == country]
-        min_year, max_year = data['year'].min(), data['year'].max()
+        min_year, max_year = 2000, 2018
 
-        # Define prediction years (2018-2023)
-        prediction_years = range(2018, 2024)  # Years 2018-2023
+        # Define prediction years (2019-2023)
+        prediction_years = range(2019, 2024) 
 
         for window in windows:
             for start_year in range(min_year, max_year - window + 1):
@@ -58,4 +58,7 @@ def run_ridge_autotune_regression(df, notnull_df, windows, alphas=[0.01, 0.1, 1.
                             'difference': pred_val - actual_val if actual_val is not None else None
                         })
 
+    print("Best alpha values for each country-goal pair:")
+    for result in results:
+        print(f"Country: {result['country']}, Goal: {result['goal']}, Best Alpha: {result['alpha']}")
     return results
